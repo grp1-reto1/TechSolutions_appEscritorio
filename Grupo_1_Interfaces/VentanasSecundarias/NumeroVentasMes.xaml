@@ -1,0 +1,29 @@
+﻿<Window x:Class="Grupo_1_Interfaces.NumeroVentasMes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Grupo_1_Interfaces"
+        mc:Ignorable="d"
+        Title="NumeroVentasMes" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- ComboBox -->
+            <RowDefinition Height="*"/>
+            <!-- DataGrid -->
+            <RowDefinition Height="Auto"/>
+            <!-- Botón -->
+        </Grid.RowDefinitions>
+        <ComboBox x:Name="cmbEstadoDeVentas" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="cmbEstadoDeVentas_SelectionChanged" Margin="0,10,0,0" Width="131" Height="25"/>
+        <DataGrid Name="dataGridVentas" Grid.Row="1" Margin="20,24,20,10" HeadersVisibility="Column" FontSize="15" IsReadOnly="True" AutoGenerateColumns="false">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Total" Binding="{Binding name}" />
+                <DataGridTextColumn Header="Estado" Binding="{Binding EstadoTraducido}" />
+                <DataGridTextColumn Header="Total" Binding="{Binding TotalFormateado}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Cerrar" Grid.Row="2" HorizontalAlignment="Right" Margin="20" VerticalAlignment="Bottom" Width="80" Click="Boton_cerrar"/>
+
+    </Grid>
+</Window>

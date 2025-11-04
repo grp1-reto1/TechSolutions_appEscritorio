@@ -1,0 +1,24 @@
+﻿<Window x:Class="Grupo_1_Interfaces.PedidiosPendienteEnvio"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Grupo_1_Interfaces"
+        mc:Ignorable="d"
+        Title="PedidiosPendienteEnvio" Height="450" Width="800">
+    <Grid>
+        <!--<StackPanel>
+            --><!--TITULO--><!--
+            <TextBlock HorizontalAlignment="Left" Margin="128,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="20"></TextBlock>
+            --><!--NOMBRE DE LA VENTA--><!--
+            <TextBlock HorizontalAlignment="Left" Margin="20" TextWrapping="Wrap" VerticalAlignment="Top"></TextBlock>
+            --><!--<TextBlock Name:"Nombre"></TextBlock>-->
+            <!--ESTADO--><!--
+            <TextBlock x:Name="estado_textblock" HorizontalAlignment="Left" Margin="20" TextWrapping="Wrap" VerticalAlignment="Top"></TextBlock>
+            --><!--VENTA TOTAL--><!--
+            <TextBlock x:Name="venta_total_textblock" HorizontalAlignment="Left" Margin="20" TextWrapping="Wrap" VerticalAlignment="Top"></TextBlock>
+            --><!--FECHA DE PEDIDO--><!--
+            <TextBlock x:Name="fecha_textblock" HorizontalAlignment="Left" Margin="20" TextWrapping="Wrap" VerticalAlignment="Top"></TextBlock>
+        </StackPanel>-->
+    </Grid>
+</Window>

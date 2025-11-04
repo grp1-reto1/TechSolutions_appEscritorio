@@ -1,0 +1,29 @@
+﻿<Window x:Class="Grupo_1_Interfaces.TotalFacturado"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Grupo_1_Interfaces"
+        mc:Ignorable="d"
+        Title="TotalFacturado" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- ComboBox -->
+            <RowDefinition Height="*"/>
+            <!-- DataGrid -->
+            <RowDefinition Height="Auto"/>
+            <!-- Botón -->
+        </Grid.RowDefinitions>
+        <ComboBox x:Name="cmbEstadoDePago" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="cmbEstadoDePago_SelectionChanged" Margin="0,10,0,0" Width="131" Height="25"/>
+        <DataGrid Name="dataGridFacturas" Grid.Row="1" Margin="20,24,20,10" FontSize="15" HeadersVisibility="Column" IsReadOnly="True" AutoGenerateColumns="false">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nombre" Binding="{Binding name}" />
+                <DataGridTextColumn Header="Fecha" Binding="{Binding date}" />
+                <DataGridTextColumn Header="Estado de pago" Binding="{Binding EstadoDePagoTraducido}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Cerrar" Grid.Row="2" HorizontalAlignment="Right" Margin="20" VerticalAlignment="Bottom" Width="80" Click="Boton_cerrar"/>
+
+    </Grid>
+</Window>

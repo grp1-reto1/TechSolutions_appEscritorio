@@ -1,0 +1,29 @@
+﻿<Window x:Class="Grupo_1_Interfaces.ProductosStock"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Grupo_1_Interfaces"
+        mc:Ignorable="d"
+        Title="ProductosStock" Height="400" Width="350">
+    <Grid Margin="15">
+        <StackPanel>
+            <TextBlock FontSize="20" Text="Detalle de proucto de Stock" Width="258" HorizontalAlignment="Center"/>
+
+            <TextBlock Text="Nombre:" Margin="0, 20, 0, 0" FontSize="14" />
+            <Label x:Name="Nombre_stock" Foreground="#555555" FontSize="13"/>
+
+            <TextBlock Text="Stock disponible:" FontSize="14" />
+            <Label x:Name="StockDisponible_stock" Foreground="#555555" FontSize="13" />
+
+            <TextBlock Text="Stock total:" FontSize="14" />
+            <Label x:Name="StockTotal_stock" Foreground="#555555"  FontSize="13" />
+            
+            <TextBlock Text="Stock reservado:" />
+            <Label x:Name="Reservado_stock" Foreground="#555555"/>
+
+            <TextBlock Text="Ubicación del porducto:" FontSize="14" />
+            <Label x:Name="Ubicacion_stock" Foreground="#555555"  FontSize="13" />
+        </StackPanel>
+    </Grid>
+</Window>
