@@ -6,8 +6,9 @@
             xmlns:local="clr-namespace:Grupo_1_Interfaces"
             mc:Ignorable="d"
             xmlns:utils="clr-namespace:Grupo_1_Interfaces.Utils"
-            Title="MainWindow" Height="500" Width="800">
+            Title="MainWindow" Height="570" Width="850">
     <Window.Resources>
+        <!--define el background del stock según la cantidad disponible-->
         <utils:StockColor x:Key="StockColor"/>
     </Window.Resources>
 
@@ -31,9 +32,6 @@
             <RowDefinition Height="59*"/>
             <!-- fila inferior -->
         </Grid.RowDefinitions>
-
-
-        <!--<Border CornerRadius="10" BorderBrush="Black" BorderThickness="1" Background="White" Margin="40,87,605,199" >-->
 
         <!--NÚMERO DE VENTAS DEL MES-->
         <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,10,10,10" BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="White">
@@ -60,6 +58,8 @@
                 
                 <!--<Label x:Name="lblNumeroVentas" HorizontalAlignment="Center" FontSize="12" Grid.Row="2"/>-->
                 <ProgressBar Grid.Row="1" x:Name="ProgressBarVentas" Minimum="0" Maximum="20" Value="7" Height="15" Width="150" Margin="37,17,38,3"/>
+                
+                <!--Botón para más detalles-->
                 <Button Grid.Row="2" Content="Más detalles" Width="100" FontSize="10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,11" Click="Boton_ventas">
                     <Button.Resources>
                         <Style TargetType="Border">
@@ -77,6 +77,7 @@
                     <RowDefinition Height="Auto" MinHeight="16" />
                     <!-- Título -->
                     <RowDefinition Height="Auto" MinHeight="41.28"/>
+                    <!-- Label -->
                     <RowDefinition/>
                     <!-- Espacio flexible -->
                     <RowDefinition Height="Auto" />
@@ -87,12 +88,16 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center" Height="36" Width="131" />
 
+                <!--Se mostrará el total facturado desde la API-->
                 <Label x:Name="lblTotalFacturado"
                        Content="0 €"
                        FontSize="16"
                        Foreground="DarkGreen"
                        HorizontalAlignment="Center" RenderTransformOrigin="0.547,-0.456" Margin="0,34,0,11" Grid.RowSpan="2"/>
-                <Button Grid.Row="2" Content="Más detalles"  Width="100" FontSize="10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="Boton_facturas" Margin="0,0,10,11" RenderTransformOrigin="0.515,0.091">
+                
+                <!--Botón para más detalles -->
+                <Button Grid.Row="2" Content="Más detalles"  Width="100" 
+                        FontSize="10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="Boton_facturas" Margin="0,0,10,11" RenderTransformOrigin="0.515,0.091">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="5"/>
@@ -113,10 +118,10 @@
             </StackPanel>
         </Border>
 
-        <!--PRODUCTOS CON STOCK BAJOS-->
-        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="22,10,14,10" BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="White" Grid.RowSpan="2">
-            <StackPanel>
-                <TextBlock Text="Productos con stock bajo" 
+        <!--PRODUCTOS CON STOCK -->
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="22,10,14,45" BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="White" Grid.RowSpan="2">
+            <StackPanel Margin="0,0,0,34">
+                <TextBlock Text="Productos con stock" 
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                            FontSize="20"
@@ -125,31 +130,31 @@
         </Border>
 
         <!--PEDIDOS PENDIENTES DE ENVÍO-->
-        <Border Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="10,10,21,10" BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="White" Grid.RowSpan="2">
+        <Border Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="10,10,21,45" BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="White" Grid.RowSpan="2">
             <StackPanel>
                 <TextBlock Text="Pedidos pendientes de envío" 
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                            FontSize="20"
                         Margin="10"/>
-
             </StackPanel>
         </Border>
 
         <!--CLIENTES DESTACADOS datagrid-->
-        <DataGrid Grid.Column="4" Grid.ColumnSpan="2" x:Name="dataGridClientes" IsReadOnly="True" AutoGenerateColumns="False" FontSize="12" HeadersVisibility="Column" Margin="23,56,22,20" SelectionChanged="DataGrid_SelectionChangedClienteDestacado">
+        <DataGrid Grid.Column="4" Grid.ColumnSpan="2" x:Name="dataGridClientes" IsReadOnly="True" AutoGenerateColumns="False" FontSize="12" 
+                  HeadersVisibility="Column" Margin="23,56,22,20" SelectionChanged="DataGrid_SelectionChangedClienteDestacado">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nombre" Binding="{Binding name}" Width="2*" SortMemberPath="nombre_cliente" />
+                <!--La información se obtiene directamente de la API-->
+                <!--La columna muestra el nombre del cliente y permite ordenar por la propiedad 'nombre_cliente' al hacer clic en el encabezado-->
+                <DataGridTextColumn Header="Nombre" Binding="{Binding name}" Width="2*" SortMemberPath="nombre_cliente" /> 
                 <DataGridTextColumn Header="Email" Binding="{Binding email}" Width="2*">
-                    <DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.ElementStyle> <!--Cuando pase el ratón, en este caso 'email' se podrá ver todo su información-->
                         <Style TargetType="TextBlock">
                             <Setter Property="ToolTip" Value="{Binding email}" />
                             <Setter Property="TextTrimming" Value="CharacterEllipsis" />
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <!--<DataGridTextColumn Header="Teléfono" Binding="{Binding phone}" Width="*" />
-                <DataGridTextColumn Header="Ciudad" Binding="{Binding city}" Width="*"/>-->
             </DataGrid.Columns>
         </DataGrid>
 
@@ -157,10 +162,13 @@
         <!--<TextBlock Grid.Column="4" Grid.ColumnSpan="2" x:Name="mensajeSinClientes" Text="Aún no hay clientes destacados" Foreground="Gray" FontStyle="Italic" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>-->
 
         <!--STOCK datagrid-->
-        <DataGrid Margin="43,76,34,23" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" CanUserSortColumns="True"  Name="dataGridStock" FontSize="12" RowHeight="20" IsReadOnly="True" HeadersVisibility="Column" AutoGenerateColumns="False" Grid.RowSpan="2" SelectionChanged="DataGrid_SelectionChangedStock" >
+        <DataGrid Margin="43,76,34,58" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" CanUserSortColumns="True"  Name="dataGridStock" 
+                  FontSize="12" RowHeight="20" IsReadOnly="True" HeadersVisibility="Column" AutoGenerateColumns="False" Grid.RowSpan="2" SelectionChanged="DataGrid_SelectionChangedStock" >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nombre" Binding="{Binding nombre_producto}" Width="250" SortMemberPath="nombre_producto" >
-                    <DataGridTextColumn.ElementStyle>
+                <!--La información se obtiene directamente de la API-->
+                <!--La columna muestra el nombre del cliente y permite ordenar por la propiedad 'nombre_producto' al hacer clic en el encabezado-->
+                <DataGridTextColumn Header="Nombre" Binding="{Binding nombre_producto}" Width="250" SortMemberPath="nombre_producto" > 
+                    <DataGridTextColumn.ElementStyle> <!--Cuando pase el ratón, en este caso 'email' se podrá ver todo su información-->
                         <Style TargetType="TextBlock">
                             <Setter Property="ToolTip" Value="{Binding nombre_producto}" />
                             <Setter Property="TextTrimming" Value="CharacterEllipsis" />
@@ -170,7 +178,8 @@
                 <DataGridTextColumn Header="Stock" Binding="{Binding available_quantity}" >
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
-                            <Setter Property="Background" Value="{Binding available_quantity, Converter={StaticResource StockColor}}"/>
+                            <Setter Property="Background" Value="{Binding available_quantity, Converter={StaticResource StockColor}}"/> 
+                            <!--Viene de la clase 'StockColor', donde depende si tiene mucho stock o poco stock el background es de un color u otro-->
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -178,11 +187,22 @@
         </DataGrid>
 
         <!--PEDIDOS PENDIENTES datagrid-->
-        <DataGrid Name="dataGridPedidos" Margin="28,76,39,25" Grid.Row="1" Grid.Column="3" FontSize="12" RowHeight="20" IsReadOnly="True" HeadersVisibility="Column" AutoGenerateColumns="false" SelectionChanged="DataGrid_SelectionChangedPedido" Grid.ColumnSpan="3" Grid.RowSpan="2">
+        <DataGrid Name="dataGridPedidos" Margin="28,76,39,58" Grid.Row="1" Grid.Column="3" FontSize="12" RowHeight="20" 
+        IsReadOnly="True" HeadersVisibility="Column" AutoGenerateColumns="false" SelectionChanged="DataGrid_SelectionChangedPedido" Grid.ColumnSpan="3" Grid.RowSpan="2">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nombre" Binding="{Binding name}" SortMemberPath="nombre_pedido" Width="*"/>
-                <DataGridTextColumn Header="Nombre del cliente" Binding="{Binding nombre_cliente}" Width="2*" >
+                <!--La información se obtiene directamente de la API-->
+                <!--La columna muestra el nombre del cliente y permite ordenar por la propiedad 'nombre_pedido' al hacer clic en el encabezado-->
+                <DataGridTextColumn Header="Nombre" Binding="{Binding name}" SortMemberPath="nombre_pedido" Width="*"> 
                     <DataGridTextColumn.ElementStyle>
+                        <!--Cuando pase el ratón, en este caso 'name' se podrá ver todo su información-->
+                        <Style TargetType="TextBlock">
+                            <Setter Property="ToolTip" Value="{Binding name}" />
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Nombre del cliente" Binding="{Binding nombre_cliente}" Width="2*" >
+                    <DataGridTextColumn.ElementStyle> <!--Cuando pase el ratón, en este caso 'nombre del cliente' se podrá ver todo su información-->
                         <Style TargetType="TextBlock">
                             <Setter Property="ToolTip" Value="{Binding nombre_cliente}" />
                             <Setter Property="TextTrimming" Value="CharacterEllipsis" />
@@ -192,6 +212,17 @@
                 <DataGridTextColumn Header="Fecha envio" Binding="{Binding scheduled_date, StringFormat=dd/MM/yyyy}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
+
+        <Button Content="Cerrar" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3"
+        HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="70" Height="20" Margin="15"
+        Click="Boton_CerrarVentana">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
     </Grid>
 </Window>
     

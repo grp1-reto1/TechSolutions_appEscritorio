@@ -19,19 +19,24 @@ namespace Grupo_1_Interfaces
 {
     /// <summary>
     /// Lógica de interacción para PedidiosPendienteEnvio.xaml
+    /// Esta ventana muestra la información de un pedido pendiente de envío
     /// </summary>
-    public partial class PedidiosPendienteEnvio : Window
+    public partial class PedidosPendienteEnvio : Window
     {
-        public PedidiosPendienteEnvio(Pedido pedidoSeleccionado)
+        //Obtiene la información de 'Pedido' y la asigna a los controles de la interfaz
+        public PedidosPendienteEnvio(Pedido pedidoSeleccionado)
         {
             InitializeComponent();
 
+            //Se asigna la información de 'Pedido' a los controles correspondientes
             Nombre_pedido.Content = pedidoSeleccionado.name;
-            Fecha_pedido.Content = pedidoSeleccionado.scheduled_date.ToString("dd/MM/yyyy");
+            Fecha_pedido.Content = pedidoSeleccionado.scheduled_date.ToString("dd/MM/yyyy"); //de la fomrato específico
             Origen_pedido.Content = pedidoSeleccionado.origin;
             Estado_pedido.Content = pedidoSeleccionado.EstadoPedido;
         }
 
+
+        //Al pulsar el botón se cierra la ventana
         private void boton_cerrar(object sender, RoutedEventArgs e)
         {
             Close();

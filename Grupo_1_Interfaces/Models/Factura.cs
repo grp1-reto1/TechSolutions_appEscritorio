@@ -11,15 +11,18 @@ namespace Grupo_1_Interfaces.Models
 {
     public class Factura
     {
-        public string name { get; set; }
+        public string name { get; set; } //nombre de la factura
+        public string payment_state {  get; set; } // estado de pago
+        public string state { get; set; } //estado de la factura
+        public decimal amount_total { get; set; } //total
+        public DateTime date {  get; set; } // fecha
+        public string nombre_cliente { get; set; } //nombre del cliente
+        public int partner_id { get; set; } //id del cliente
 
-        public string payment_state {  get; set; }
-        public string state { get; set; }
-        public decimal amount_total { get; set; }
-        public DateTime date {  get; set; }
-        public string nombre_cliente { get; set; }
-        public int partner_id { get; set; }
-        public string EstadoFacturaTraducido
+        //Traducción del estado de facturas
+        //Se basa en 'payment_state' en lugar de 'state' porque nos interesa saber 
+        //si la factura está pagada o no, independiente del estado general de la factura
+        public string EstadoFacturaTraducido 
         {
             get
             {

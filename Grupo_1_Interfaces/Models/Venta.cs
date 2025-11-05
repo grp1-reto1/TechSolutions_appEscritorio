@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,15 +9,15 @@ namespace Grupo_1_Interfaces.Models
 {
     public class Venta
     {
-        public string name { get; set; }
-        public string nombre_cliente { get; set; }
-        public decimal amount_total { get; set; }
-        //public int name { get; set;}
-        public string state { get; set; }
+        public string name { get; set; } //nombre de la venta
+        public string nombre_cliente { get; set; } //nombre del cliente
+        public decimal amount_total { get; set; } //total de la venta
+        public string state { get; set; } //estado
+        public DateTime date_order { get; set; } //fecha
+        public string TotalFormateado => amount_total.ToString("C2", new CultureInfo("es-ES"));
 
-        public DateTime date_order { get; set; }
 
-        //Traducir el estado
+        //Traducir el estado de venta
         public string EstadoTraducido
         {
             get
@@ -32,8 +33,6 @@ namespace Grupo_1_Interfaces.Models
                 }
             }
         }
-
-        public string TotalFormateado => $"{amount_total:N2} €";
     }
 
 }

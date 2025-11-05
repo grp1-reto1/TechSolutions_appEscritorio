@@ -28,19 +28,22 @@ namespace Grupo_1_Interfaces
     public partial class MainWindow : Window
     {
         private readonly ApiOdooService _apiService;
+        //Observables para 'binding' en datagrid
         private ObservableCollection<Stock> stocksObservable;
         private ObservableCollection<Cliente> clientesObservable;
         public MainWindow()
         {
             InitializeComponent();
             _apiService = new ApiOdooService();
+            //Inicia la ventana y carga los datos de forma asincrona
             _ = InicializarAsync();
+            //login para no tener que estar pidiendo todo el rato registarse cada vez que se abra una ventana
             _ = _apiService.LoginAsync("xiaoenbergaretxe@gmail.com", "YRU475I2", "TechSolutions2.0");
 
         }
 
 
-
+        //Inicializa la ventana cargando, ventas, pedidos, fcturas, stock y clientes
         private async Task InicializarAsync()
         {
             try
@@ -64,6 +67,8 @@ namespace Grupo_1_Interfaces
             }
         }
 
+
+        //Obtiene todas las ventas del mes
         private async Task cargarVentas()
         {
             //Obtener todas las ventas del mes
@@ -78,20 +83,18 @@ namespace Grupo_1_Interfaces
             //Se define por defecto un objetivo de venta mensual, en este caso 20
             int objetivoMensual = 20;
 
-            // 5. Configurar ProgressBar
             ProgressBarVentas.Minimum = 0;
             ProgressBarVentas.Maximum = objetivoMensual;
             ProgressBarVentas.Value = numeroVentas;
 
-
-            // 7. Opcional: mostrar porcentaje
+            // mostrar porcentaje
             double porcentaje = (double)numeroVentas / objetivoMensual * 100;
             //para el label:
             //lblNumeroVentas.Content = $"Ventas del mes: {numeroVentas} ({porcentaje:F1}% del objetivo)";
-
-
         }
 
+
+        //Carga las facturas pagadas, obtiene el total de facturas y el formato monetario
         private async Task CargarFacturas()
         {
             var facturas = await _apiService.GetFacturacionAsync();
@@ -100,10 +103,12 @@ namespace Grupo_1_Interfaces
             decimal totalFacturado = facturasPagadas.Sum(f => f.amount_total);
 
             //formato monetario
-            lblTotalFacturado.Content = totalFacturado.ToString("C2", new CultureInfo("es-ES")); //C2 = C-> formato monetario y 2-> cantidad de decimales y 'es-ES'-> Símbolo de moneda
+            lblTotalFacturado.Content = totalFacturado.ToString("C2", new CultureInfo("es-ES")); 
+            //C2 = C-> formato monetario y 2-> cantidad de decimales y 'es-ES'-> Símbolo de moneda
         }
 
 
+        //Obtiene los pedidos pendientes de envío  para visualizar en datagrid
         private async Task CargarPedidos()
         {
             var pedidos = await _apiService.GetPedidoPendienteAsync();
@@ -113,7 +118,7 @@ namespace Grupo_1_Interfaces
         }
 
 
-
+        //Se obtiene todos los clientes que estén en 'Destacado'
         private async Task CargarClientes()
         {
             var clientes = await _apiService.GetClientesDestacadosAsync();
@@ -123,11 +128,14 @@ namespace Grupo_1_Interfaces
             view.SortDescriptions.Clear();
 
             view.SortDescriptions.Add(new SortDescription("nombre_cliente", ListSortDirection.Ascending));
+            //se ordena la lista por nombre de cliente ascendiente
 
             dataGridClientes.ItemsSource = view;
             //dataGridClientes.ItemsSource = clientes;
         }
 
+
+        //Obtiene la información del stock para visualizarlo en datagrid
         private async Task CargarStocks()
         {
             var stocks = await _apiService.GetStockAsync();
@@ -136,12 +144,16 @@ namespace Grupo_1_Interfaces
             var view = CollectionViewSource.GetDefaultView(stocksObservable);
             view.SortDescriptions.Clear();
 
-            view.SortDescriptions.Add(new SortDescription("nombre_producto", ListSortDirection.Ascending));
+            view.SortDescriptions.Add(new SortDescription("nombre_producto", ListSortDirection.Ascending)); 
+            //se ordena la lista mediante el nombre del producto ascendiente
 
             dataGridStock.ItemsSource = view;
             //dataGridStock.ItemsSource = stocksObservable;
         }
 
+
+        //Al seleccionar el botón se manda por parametro el 'login'
+        //Evento de 'más detalles' se abre la ventana de ventas del mes
         private void Boton_ventas(object sender, RoutedEventArgs e)
         {
             NumeroVentasMes ventas = new NumeroVentasMes(_apiService);
@@ -149,12 +161,18 @@ namespace Grupo_1_Interfaces
 
         }
 
+
+        //Al seleccionar el botón se manda por parametro el 'login'
+        //Evento de 'más detalles' se abre la ventana del total facturado
         private void Boton_facturas(object sender, RoutedEventArgs e)
         {
             TotalFacturado facturas = new TotalFacturado(_apiService);
             facturas.ShowDialog();
         }
 
+
+        //Datagrid cliente
+        //Se abre la ventana al seleccionar un cliente
         private async void DataGrid_SelectionChangedClienteDestacado(object sender, SelectionChangedEventArgs e)
         {
             if (dataGridClientes.SelectedItem is Cliente clienteSeleccionado)
@@ -168,6 +186,8 @@ namespace Grupo_1_Interfaces
         }
 
 
+        //Datagrid stock
+        //Se abre la ventana al seleccionar un producto
         private async void DataGrid_SelectionChangedStock(object sender, SelectionChangedEventArgs e)
         {
             if (dataGridStock.SelectedItem is Stock stockSeleccionado)
@@ -179,15 +199,36 @@ namespace Grupo_1_Interfaces
                 //dataGridStock.SelectedItem = null; //Quita el fondo azul de la selección
             }
         }
+
+
+        //Datagrid pedido
+        //Se abre la ventana al seleccionar un pedido
         private async void DataGrid_SelectionChangedPedido(object sender, SelectionChangedEventArgs e)
         {
             if (dataGridPedidos.SelectedItem is Pedido pedidoSeleccionado)
             {
                 await Task.Delay(100);
-                PedidiosPendienteEnvio detalleWindow = new PedidiosPendienteEnvio(pedidoSeleccionado);
+                PedidosPendienteEnvio detalleWindow = new PedidosPendienteEnvio(pedidoSeleccionado);
                 detalleWindow.ShowDialog();
 
                 //dataGridPedidos.SelectedItem = null; //Quita el fondo azul de la selección
+            }
+        }
+
+        //Cierre de ventana principal
+        private void Boton_CerrarVentana(object sender, RoutedEventArgs e)
+        {
+            // Pregunta al usuario si está seguro de cerrar la ventana
+            MessageBoxResult result = MessageBox.Show( "¿Estás seguro de cerrar la ventana?",
+                "Confirmar cierre",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question
+            );
+
+            // Si el usuario pulsa "Sí", se cierra la ventana
+            if (result == MessageBoxResult.Yes)
+            {
+                this.Close();
             }
         }
     }

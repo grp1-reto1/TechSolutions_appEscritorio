@@ -20,8 +20,8 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nombre factura" Binding="{Binding name}" />
                 <DataGridTextColumn Header="Nombre del cliente" Binding="{Binding nombre_cliente}" />
-                <DataGridTextColumn Header="Importe total" Binding="{Binding amount_total}" />
-                <DataGridTextColumn Header="Fecha" Binding="{Binding date, StringFormat=dd/MM/yyyy}" />
+                <DataGridTextColumn Header="Importe total" Binding="{Binding amount_total}"/>
+                <DataGridTextColumn Header="Fecha" Binding="{Binding date, StringFormat=dd/MM/yyyy}" /> <!--formato específico de la fecha-->
                 <DataGridTextColumn Header="Estado de pago" Binding="{Binding EstadoFacturaTraducido}" />
             </DataGrid.Columns>
         </DataGrid>

@@ -9,10 +9,9 @@ namespace Grupo_1_Interfaces.Models
 {
     public class Cliente
     {
-
-        public string name { get; set; }
-        public string email { get; set; }
-        public string city { get; set; }
-        public string phone { get; set; }
+        public string name { get; set; } //nombre del cliente
+        public string email { get; set; } //email del cliente
+        public string city { get; set; } //ciudad del cliente
+        public string phone { get; set; } //teléfono del cliente
     }
 }

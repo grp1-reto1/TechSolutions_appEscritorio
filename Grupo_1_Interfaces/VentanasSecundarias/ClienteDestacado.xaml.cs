@@ -19,13 +19,16 @@ namespace Grupo_1_Interfaces
 {
     /// <summary>
     /// Lógica de interacción para Clientes.xaml
+    /// Esta ventana muestra la información de un cliente específico
     /// </summary>
     public partial class Clientes : Window
     {
+        //Obtiene la información del cliente y la asigna a los controles de la interfaz
         public Clientes(Cliente clienteSeleccionado)
         {
             InitializeComponent();
 
+            //Se asigna la información de 'Cliente' a los controles correspondientes
             Nombre_cliente.Content = clienteSeleccionado.name;
             Email_cliente.Content = clienteSeleccionado.email;
             tlf_cliente.Content = clienteSeleccionado.phone;
@@ -33,6 +36,7 @@ namespace Grupo_1_Interfaces
 
         }
 
+        //Al pulsar el botón se cierra la ventana
         private void boton_cerrar(object sender, RoutedEventArgs e)
         {
             Close();

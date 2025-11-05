@@ -19,12 +19,16 @@ namespace Grupo_1_Interfaces
 {
     /// <summary>
     /// Lógica de interacción para ProductosStock.xaml
+    /// Esta ventana muestra la información de un producto en stock
     /// </summary>
     public partial class ProductosStock : Window
     {
+        //Obtiene la información de 'Stock' y la asigna a los controles de la interfaz
         public ProductosStock(Stock productoSeleccionado)
         {
             InitializeComponent();
+
+            //Se asigna la información de 'Stock' a los controles correspondientes
             Nombre_stock.Content = productoSeleccionado.nombre_producto;
             StockDisponible_stock.Content = productoSeleccionado.available_quantity;
             StockTotal_stock.Content= productoSeleccionado.Quantity;
@@ -32,6 +36,7 @@ namespace Grupo_1_Interfaces
             Ubicacion_stock.Content = productoSeleccionado.location_id;
         }
 
+        //Al pulsar el botón se cierra la ventana
         private void boton_cerrar(object sender, RoutedEventArgs e)
         {
             Close();

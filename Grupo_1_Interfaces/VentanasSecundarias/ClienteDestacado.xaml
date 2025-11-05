@@ -22,9 +22,6 @@
             <TextBlock Text="Ciudad:" FontSize="14" />
             <Label x:Name="ciudad_cliente" Foreground="#555555" FontSize="13" />
 
-            <!--<TextBlock Text="Ubicación del porducto:" FontSize="14" />
-            <Label x:Name="Ubicacion_stock" Foreground="#555555"  FontSize="13" />-->
-
         </StackPanel>
         <Button Width="70" Click="boton_cerrar" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="Cerrar">
             <Button.Resources>
@@ -33,6 +30,5 @@
                 </Style>
             </Button.Resources>
         </Button>
-        
     </Grid>
 </Window>
