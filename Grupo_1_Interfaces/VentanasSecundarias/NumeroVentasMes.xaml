@@ -18,12 +18,27 @@
         <ComboBox x:Name="cmbEstadoDeVentas" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="cmbEstadoDeVentas_SelectionChanged" Margin="0,10,0,0" Width="131" Height="25"/>
         <DataGrid Name="dataGridVentas" Grid.Row="1" Margin="20,24,20,10" HeadersVisibility="Column" FontSize="15" IsReadOnly="True" AutoGenerateColumns="false">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Total" Binding="{Binding name}" />
-                <DataGridTextColumn Header="Estado" Binding="{Binding EstadoTraducido}" />
-                <DataGridTextColumn Header="Total" Binding="{Binding TotalFormateado}" />
+                <DataGridTextColumn Header="Nº de ventas" Binding="{Binding name}" Width="*" />
+                <DataGridTextColumn Header="Nombre del cliente" Binding="{Binding nombre_cliente}" Width="2*" >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="ToolTip" Value="{Binding nombre_cliente}" />
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Fecha" Binding="{Binding date_order, StringFormat=dd/MM/yyyy}" Width="*" />
+                <DataGridTextColumn Header="Estado" Binding="{Binding EstadoTraducido}" Width="*" />
+                <DataGridTextColumn Header="Total" Binding="{Binding TotalFormateado}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Cerrar" Grid.Row="2" HorizontalAlignment="Right" Margin="20" VerticalAlignment="Bottom" Width="80" Click="Boton_cerrar"/>
+        <Button Content="Cerrar" Grid.Row="2" HorizontalAlignment="Right" Margin="20" VerticalAlignment="Bottom" Width="80" Click="Boton_cerrar">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
 
     </Grid>
 </Window>

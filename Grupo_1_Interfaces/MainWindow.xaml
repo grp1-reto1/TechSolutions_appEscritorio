@@ -36,7 +36,7 @@
         <!--<Border CornerRadius="10" BorderBrush="Black" BorderThickness="1" Background="White" Margin="40,87,605,199" >-->
 
         <!--NÚMERO DE VENTAS DEL MES-->
-        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,10,10,10" BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="White"  ToolTip="Nº de ventas del mes">
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,10,10,10" BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="White">
             <Grid Margin="10" >
                 <!--Seccionar-->
                 <Grid.RowDefinitions>
@@ -55,7 +55,11 @@
                         VerticalAlignment="Top"
                            FontSize="20"
                         Margin="0,2,0,0"/>
-                <ProgressBar Grid.Row="1" Minimum="0" Maximum="10" Value="7" Height="15" Width="150" Margin="37,17,38,3"/>
+                
+                <!--Dos maneras con label o con ProgressBar:-->
+                
+                <!--<Label x:Name="lblNumeroVentas" HorizontalAlignment="Center" FontSize="12" Grid.Row="2"/>-->
+                <ProgressBar Grid.Row="1" x:Name="ProgressBarVentas" Minimum="0" Maximum="20" Value="7" Height="15" Width="150" Margin="37,17,38,3"/>
                 <Button Grid.Row="2" Content="Más detalles" Width="100" FontSize="10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,11" Click="Boton_ventas">
                     <Button.Resources>
                         <Style TargetType="Border">
@@ -100,23 +104,12 @@
 
         <!--CLIENTES DESTACADOS-->
         <Border Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="White" Margin="10,10,10,10" >
-            <!--<TextBlock TextWrapping="Wrap" Text="Clientes destacados" Margin="10"/>-->
             <StackPanel Margin="-1,-1,-1,-1">
-
                 <TextBlock Text="Clientes destacados"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                            FontSize="20"
                         Margin="10"/>
-
-                <!-- Segundo border dentro del primero -->
-                <!--<Border BorderBrush="Gray" BorderThickness="1" CornerRadius="3" Padding="5">
-                        <TextBlock Text="Juan Pérez - 15 compras" FontSize="12"/>
-                    </Border>
-                    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="3" Padding="5" Margin="0,5,0,0">
-                        <TextBlock Text="María Gómez - 12 compras" FontSize="12"/>
-                    
-                    </Border>-->
             </StackPanel>
         </Border>
 
@@ -144,22 +137,32 @@
         </Border>
 
         <!--CLIENTES DESTACADOS datagrid-->
-        <DataGrid Grid.Column="4" Grid.ColumnSpan="2" x:Name="dataGridClientes" IsReadOnly="True" AutoGenerateColumns="False" HeadersVisibility="Column" Margin="23,56,22,20">
+        <DataGrid Grid.Column="4" Grid.ColumnSpan="2" x:Name="dataGridClientes" IsReadOnly="True" AutoGenerateColumns="False" FontSize="12" HeadersVisibility="Column" Margin="23,56,22,20" SelectionChanged="DataGrid_SelectionChangedClienteDestacado">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nombre" Binding="{Binding name}" />
-                <DataGridTextColumn Header="Cliente" Binding="{Binding PartnerName}" />
+                <DataGridTextColumn Header="Nombre" Binding="{Binding name}" Width="2*" SortMemberPath="nombre_cliente" />
+                <DataGridTextColumn Header="Email" Binding="{Binding email}" Width="2*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="ToolTip" Value="{Binding email}" />
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <!--<DataGridTextColumn Header="Teléfono" Binding="{Binding phone}" Width="*" />
+                <DataGridTextColumn Header="Ciudad" Binding="{Binding city}" Width="*"/>-->
             </DataGrid.Columns>
         </DataGrid>
 
+        <!--Sí aún no hay clientes destacados -> aviso-->
+        <!--<TextBlock Grid.Column="4" Grid.ColumnSpan="2" x:Name="mensajeSinClientes" Text="Aún no hay clientes destacados" Foreground="Gray" FontStyle="Italic" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>-->
+
         <!--STOCK datagrid-->
-        <DataGrid Margin="43,76,34,23" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"  Name="dataGridStock" FontSize="12" RowHeight="20" IsReadOnly="True" HeadersVisibility="Column" AutoGenerateColumns="False" Grid.RowSpan="2" SelectionChanged="DataGrid_SelectionChangedStock" >
+        <DataGrid Margin="43,76,34,23" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" CanUserSortColumns="True"  Name="dataGridStock" FontSize="12" RowHeight="20" IsReadOnly="True" HeadersVisibility="Column" AutoGenerateColumns="False" Grid.RowSpan="2" SelectionChanged="DataGrid_SelectionChangedStock" >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nombre" Binding="{Binding nombre_producto}" Width="250">
+                <DataGridTextColumn Header="Nombre" Binding="{Binding nombre_producto}" Width="250" SortMemberPath="nombre_producto" >
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
-                            <!-- Mostrar tooltip con el mismo texto -->
                             <Setter Property="ToolTip" Value="{Binding nombre_producto}" />
-                            <!-- Opcional: ajustar texto si es muy largo -->
                             <Setter Property="TextTrimming" Value="CharacterEllipsis" />
                         </Style>
                     </DataGridTextColumn.ElementStyle>
@@ -175,10 +178,18 @@
         </DataGrid>
 
         <!--PEDIDOS PENDIENTES datagrid-->
-        <DataGrid Name="dataGridPedidos" Margin="28,76,39,25" Grid.Row="1" Grid.Column="3" FontSize="14" RowHeight="20" IsReadOnly="True" HeadersVisibility="Column" AutoGenerateColumns="false" SelectionChanged="DataGrid_SelectionChanged" Grid.ColumnSpan="3" Grid.RowSpan="2">
+        <DataGrid Name="dataGridPedidos" Margin="28,76,39,25" Grid.Row="1" Grid.Column="3" FontSize="12" RowHeight="20" IsReadOnly="True" HeadersVisibility="Column" AutoGenerateColumns="false" SelectionChanged="DataGrid_SelectionChangedPedido" Grid.ColumnSpan="3" Grid.RowSpan="2">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nombre" Binding="{Binding name}" />
-                <DataGridTextColumn Header="Fecha envio" Binding="{Binding scheduled_date}" />
+                <DataGridTextColumn Header="Nombre" Binding="{Binding name}" SortMemberPath="nombre_pedido" Width="*"/>
+                <DataGridTextColumn Header="Nombre del cliente" Binding="{Binding nombre_cliente}" Width="2*" >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="ToolTip" Value="{Binding nombre_cliente}" />
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Fecha envio" Binding="{Binding scheduled_date, StringFormat=dd/MM/yyyy}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

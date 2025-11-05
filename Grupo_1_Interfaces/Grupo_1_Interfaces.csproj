@@ -81,19 +81,19 @@
     <Compile Include="Models\Venta.cs" />
     <Compile Include="Services\ApiOdooService.cs" />
     <Compile Include="Utils\StockColor.cs" />
-    <Compile Include="VentanasSecundarias\Clientes.xaml.cs">
-      <DependentUpon>Clientes.xaml</DependentUpon>
+    <Compile Include="VentanasSecundarias\ClienteDestacado.xaml.cs">
+      <DependentUpon>ClienteDestacado.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VentanasSecundarias\PedidiosPendienteEnvio.xaml.cs">
-      <DependentUpon>PedidiosPendienteEnvio.xaml</DependentUpon>
+    <Compile Include="VentanasSecundarias\PedidioPendienteEnvio.xaml.cs">
+      <DependentUpon>PedidioPendienteEnvio.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VentanasSecundarias\ProductosStock.xaml.cs">
-      <DependentUpon>ProductosStock.xaml</DependentUpon>
+    <Compile Include="VentanasSecundarias\ProductoStock.xaml.cs">
+      <DependentUpon>ProductoStock.xaml</DependentUpon>
     </Compile>
     <Compile Include="VentanasSecundarias\TotalFacturado.xaml.cs">
       <DependentUpon>TotalFacturado.xaml</DependentUpon>
     </Compile>
-    <Page Include="VentanasSecundarias\Clientes.xaml">
+    <Page Include="VentanasSecundarias\ClienteDestacado.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -113,11 +113,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="VentanasSecundarias\PedidiosPendienteEnvio.xaml">
+    <Page Include="VentanasSecundarias\PedidioPendienteEnvio.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="VentanasSecundarias\ProductosStock.xaml">
+    <Page Include="VentanasSecundarias\ProductoStock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

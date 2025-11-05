@@ -39,14 +39,14 @@ namespace Grupo_1_Interfaces
 
                 // Obtener los estados únicos traducidos
                 var estados = todasLasFacturas
-                    .Select(v => v.EstadoDePagoTraducido)
+                    .Select(v => v.EstadoFacturaTraducido)
                     .Distinct()
                     .OrderBy(e => e)
                     .ToList();
 
                 estados.Insert(0, "Todos");
-                cmbEstadoDePago.ItemsSource = estados;
-                cmbEstadoDePago.SelectedIndex = 0;
+                cmbEstadoFactura.ItemsSource = estados;
+                cmbEstadoFactura.SelectedIndex = 0;
 
                 List<Factura> ventas = await _apiService.GetFacturacionAsync();
 
@@ -58,8 +58,26 @@ namespace Grupo_1_Interfaces
             }
         }
 
-        private void cmbEstadoDePago_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cmbEstadoFactura_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
+            if (todasLasFacturas == null || todasLasFacturas.Count == 0)
+                return;
+
+            string estadoSeleccionado = cmbEstadoFactura.SelectedItem as string;
+
+            if (string.IsNullOrEmpty(estadoSeleccionado) || estadoSeleccionado == "Todos")
+            {
+                dataGridFacturas.ItemsSource = todasLasFacturas;
+            }
+            else
+            {
+                var filtradas = todasLasFacturas
+                    .Where(v => v.EstadoFacturaTraducido == estadoSeleccionado)
+                    .ToList();
+
+                dataGridFacturas.ItemsSource = filtradas;
+            }
 
         }
 

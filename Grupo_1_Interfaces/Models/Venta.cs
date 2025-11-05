@@ -8,13 +8,13 @@ namespace Grupo_1_Interfaces.Models
 {
     public class Venta
     {
-
-        public float amount_total { get; set; }
+        public string name { get; set; }
+        public string nombre_cliente { get; set; }
+        public decimal amount_total { get; set; }
         //public int name { get; set;}
         public string state { get; set; }
 
-        public string name { get; set; }
-        public DateTime date_orderfecha { get; set; }
+        public DateTime date_order { get; set; }
 
         //Traducir el estado
         public string EstadoTraducido

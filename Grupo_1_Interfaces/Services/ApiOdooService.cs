@@ -7,6 +7,9 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Documents;
+using System.Xml.Linq;
 
 namespace WpfApp.Services
 {
@@ -49,7 +52,7 @@ namespace WpfApp.Services
             if (data.uid != null)
             {
                 _uid = (int)data.uid;
-                Console.WriteLine($"✅ Login correcto. UID: {_uid}");
+                Console.WriteLine($" Login correcto. UID: {_uid}");
             }
 
             return true;
@@ -67,7 +70,7 @@ namespace WpfApp.Services
         {
 
             string url = $"{_baseUrl}/api?table=sale.order&filter=date_order:gte:2025-11-01," +
-                         "date_order:lte:2025-11-30&fields=name,partner_id,amount_total,state&sort=date_order:asc";
+                         "date_order:lte:2025-11-30&fields=name,partner_id,amount_total,state,date_order&sort=date_order:asc";
 
             var response = await _client.GetAsync(url);
 
@@ -79,9 +82,30 @@ namespace WpfApp.Services
             
             var ventasJson = Convert.ToString(root.message);
 
-            var ventas = JsonConvert.DeserializeObject<List<Venta>>(ventasJson);
 
-            return ventas;
+            var ventaJson = root.message;
+
+            List<Venta> pedidoList = new List<Venta>();
+
+
+            foreach (var item in ventaJson)
+            {
+                Venta v = new Venta();
+
+                v.name = item.name;
+                v.date_order = item.date_order;
+                v.nombre_cliente = item.partner_id[1];
+                v.amount_total = (decimal)item.amount_total;
+                v.state = item.state;
+
+                pedidoList.Add(v);
+
+            }
+            return pedidoList;
+        
+            //var ventas = JsonConvert.DeserializeObject<List<Venta>>(ventasJson);
+
+            //return ventas;
 
         }
 
@@ -92,19 +116,41 @@ namespace WpfApp.Services
             string url = $"{_baseUrl}/api?table=account.move&filter=move_type:eq:out_invoice," +
                          "date:gte:2025-11-01,date:lte:2025-11-30&" +
                          "fields=name,date,partner_id,amount_untaxed,amount_tax,amount_total,state,payment_state&sort=date:asc";
-            var response = await _client.GetAsync(url);
 
+            var response = await _client.GetAsync(url);
             if (!response.IsSuccessStatusCode)
                 throw new Exception($"Error al obtener facturación: {response.StatusCode}");
 
             var jsonString = await response.Content.ReadAsStringAsync();
-
             var root = JsonConvert.DeserializeObject<dynamic>(jsonString);
 
-            var facturasJson = Convert.ToString(root.message);
+            var facturasJson = root.message;
+            List<Factura> facturas = new List<Factura>();
 
-            var facturas = JsonConvert.DeserializeObject<List<Factura>>(facturasJson);
+            foreach (var item in facturasJson)
+            {
+                Factura f = new Factura();
 
+                f.name = item.name;
+                f.date = item.date;
+                f.amount_total = (decimal)item.amount_total;
+                f.state = item.state;
+                f.payment_state = item.payment_state;
+
+                // Obtener nombre del cliente desde partner_id
+                if (item.partner_id != null && item.partner_id.HasValues)
+                {
+                    f.partner_id = (int)item.partner_id[0];       // ID del cliente
+                    f.nombre_cliente = (string)item.partner_id[1]; // Nombre del cliente
+                }
+                else //Por si la fsctura no tiene ingresado el cliente, asigna valores por defecto
+                {
+                    f.partner_id = 0;
+                    f.nombre_cliente = "Sin cliente";
+                }
+
+                facturas.Add(f);
+            }
 
             return facturas;
         }
@@ -120,14 +166,22 @@ namespace WpfApp.Services
             var response = await _client.GetAsync(url);
 
             if (!response.IsSuccessStatusCode)
+            {
                 throw new Exception($"Error al obtener clientes destacados: {response.StatusCode}");
+            }
 
             var jsonString = await response.Content.ReadAsStringAsync();
 
             var root = JsonConvert.DeserializeObject<dynamic>(jsonString);
 
             var clientesJson = Convert.ToString(root.message);
-            
+
+            if (clientesJson == "NotFound")
+            {
+                MessageBox.Show("Aún no hay clientes destacados.", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                return new List<Cliente>();
+            }
+
             var clientes = JsonConvert.DeserializeObject<List<Cliente>>(clientesJson);
 
             return clientes;
@@ -185,7 +239,7 @@ namespace WpfApp.Services
             var response = await _client.GetAsync(url);
 
             if (!response.IsSuccessStatusCode)
-                throw new Exception($"Error al obtener clientes destacados: {response.StatusCode}");
+                throw new Exception($"Error al obtener los pedidos pendientes: {response.StatusCode}");
 
             var jsonString = await response.Content.ReadAsStringAsync();
 
@@ -193,33 +247,31 @@ namespace WpfApp.Services
 
             var pedidosJson = Convert.ToString(root.message);
 
-            var pedidos = JsonConvert.DeserializeObject<List<Pedido>>(pedidosJson);
+            var pedidoJson = root.message;
 
-            return pedidos;
+            List<Pedido> pedidoList = new List<Pedido>();
+
+
+            foreach (var item in pedidoJson)
+            {
+                Pedido p = new Pedido();
+
+                p.name = item.name;
+                p.origin = item.origin;
+                p.scheduled_date = item.scheduled_date;
+                p.state = item.state;
+
+                p.nombre_cliente = item.partner_id[1].ToString();
+
+                pedidoList.Add(p);
+
+            }
+            return pedidoList;
+
+            //var pedidos = JsonConvert.DeserializeObject<List<Pedido>>(pedidosJson);
+
+            //return pedidos;
         }
-
-
-        // Obtener pedidio pendiente de envio
-        public async Task<List<Pedido>> GetPedidoPendienteAsync()
-        {
-            string url = $"{_baseUrl}/api?table=stock.picking&filter=state:!=:done,picking_type_code:=:outgoing&fields=name,origin,state,scheduled_date,partner_id&sort=scheduled_date:asc";
-
-            var response = await _client.GetAsync(url);
-
-            if (!response.IsSuccessStatusCode)
-                throw new Exception($"Error al obtener clientes destacados: {response.StatusCode}");
-
-            var jsonString = await response.Content.ReadAsStringAsync();
-
-            var root = JsonConvert.DeserializeObject<dynamic>(jsonString);
-
-            var pedidosJson = Convert.ToString(root.message);
-
-            var pedidos = JsonConvert.DeserializeObject<List<Pedido>>(pedidosJson);
-
-            return pedidos;
-        }
-
 
     }
 }

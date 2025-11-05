@@ -1,0 +1,38 @@
+﻿<Window x:Class="Grupo_1_Interfaces.Clientes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Grupo_1_Interfaces"
+        mc:Ignorable="d"
+        Title="Clientes" Height="375" Width="350">
+    <Grid Margin="15">
+        <StackPanel>
+            <TextBlock FontSize="20" Text="Detalles del cliente" Width="169" HorizontalAlignment="Center"/>
+
+            <TextBlock Text="Nombre:" Margin="0, 20, 0, 0" FontSize="14" />
+            <Label x:Name="Nombre_cliente" Foreground="#555555" FontSize="13"/>
+
+            <TextBlock Text="Email:" FontSize="14" />
+            <Label x:Name="Email_cliente" Foreground="#555555" FontSize="13" />
+
+            <TextBlock Text="Teléfono:" FontSize="14" />
+            <Label x:Name="tlf_cliente" Foreground="#555555"  FontSize="13" />
+
+            <TextBlock Text="Ciudad:" FontSize="14" />
+            <Label x:Name="ciudad_cliente" Foreground="#555555" FontSize="13" />
+
+            <!--<TextBlock Text="Ubicación del porducto:" FontSize="14" />
+            <Label x:Name="Ubicacion_stock" Foreground="#555555"  FontSize="13" />-->
+
+        </StackPanel>
+        <Button Width="70" Click="boton_cerrar" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="Cerrar">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        
+    </Grid>
+</Window>

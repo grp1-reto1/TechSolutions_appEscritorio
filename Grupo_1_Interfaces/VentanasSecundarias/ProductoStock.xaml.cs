@@ -31,5 +31,10 @@ namespace Grupo_1_Interfaces
             Reservado_stock.Content = productoSeleccionado.reserved_quantity;
             Ubicacion_stock.Content = productoSeleccionado.location_id;
         }
+
+        private void boton_cerrar(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

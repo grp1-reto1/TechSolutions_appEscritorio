@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Grupo_1_Interfaces"
         mc:Ignorable="d"
-        Title="ProductosStock" Height="400" Width="350">
+        Title="ProductosStock" Height="375" Width="350">
     <Grid Margin="15">
         <StackPanel>
-            <TextBlock FontSize="20" Text="Detalle de proucto de Stock" Width="258" HorizontalAlignment="Center"/>
+            <TextBlock FontSize="20" Text="Detalle de producto de Stock" Width="258" HorizontalAlignment="Center"/>
 
             <TextBlock Text="Nombre:" Margin="0, 20, 0, 0" FontSize="14" />
             <Label x:Name="Nombre_stock" Foreground="#555555" FontSize="13"/>
@@ -18,12 +18,20 @@
 
             <TextBlock Text="Stock total:" FontSize="14" />
             <Label x:Name="StockTotal_stock" Foreground="#555555"  FontSize="13" />
-            
-            <TextBlock Text="Stock reservado:" />
-            <Label x:Name="Reservado_stock" Foreground="#555555"/>
+
+            <TextBlock Text="Stock reservado:" FontSize="14" />
+            <Label x:Name="Reservado_stock" Foreground="#555555" FontSize="13" />
 
             <TextBlock Text="Ubicación del porducto:" FontSize="14" />
             <Label x:Name="Ubicacion_stock" Foreground="#555555"  FontSize="13" />
+
         </StackPanel>
+        <Button Width="70" Click="boton_cerrar" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="Cerrar">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Window>

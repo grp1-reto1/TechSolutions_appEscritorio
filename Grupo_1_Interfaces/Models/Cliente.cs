@@ -11,19 +11,8 @@ namespace Grupo_1_Interfaces.Models
     {
 
         public string name { get; set; }
-        //public int partner_id { get; set; }
-
-        public JArray partner_id { get; set; }
-
-        //devuelve solo el nombre del cliente
-        public string PartnerName
-        {
-            get
-            {
-                if (partner_id != null && partner_id.Count > 1)
-                    return partner_id[1].ToString();
-                return "";
-            }
-        }
+        public string email { get; set; }
+        public string city { get; set; }
+        public string phone { get; set; }
     }
 }

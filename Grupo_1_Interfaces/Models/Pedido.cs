@@ -12,7 +12,18 @@ namespace Grupo_1_Interfaces.Models
         public string origin { get; set; }
         public DateTime scheduled_date { get; set; }
         public string state { get; set; }
-        public string FechaLimite { get; set; }
-
+        public string nombre_cliente { get; set; }
+        public string EstadoPedido
+        {
+            get
+            {
+                switch (state)
+                {
+                    case "confirmed": return "En espera";
+                    case "assigned": return "Listo";
+                    default: return state ?? "";
+                }
+            }
+        }
     }
 }

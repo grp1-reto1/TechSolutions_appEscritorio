@@ -11,7 +11,6 @@ namespace Grupo_1_Interfaces.Models
         public int id { get; set; } //id del producto
         public int id_producto { get; set;}
         public string nombre_producto { get; set; }
-        //public string product_id { get; set; } //id del producto más el nombre
         public string location_id { get; set; } //id de la ubicación y el nombre del almacén
         public float available_quantity { get; set; } //Stock
         public float reserved_quantity { get; set; } //Unidades reservados

@@ -15,15 +15,23 @@
             <RowDefinition Height="Auto"/>
             <!-- Botón -->
         </Grid.RowDefinitions>
-        <ComboBox x:Name="cmbEstadoDePago" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="cmbEstadoDePago_SelectionChanged" Margin="0,10,0,0" Width="131" Height="25"/>
+        <ComboBox x:Name="cmbEstadoFactura" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="cmbEstadoFactura_SelectionChanged" Margin="0,10,0,0" Width="131" Height="25"/>
         <DataGrid Name="dataGridFacturas" Grid.Row="1" Margin="20,24,20,10" FontSize="15" HeadersVisibility="Column" IsReadOnly="True" AutoGenerateColumns="false">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nombre" Binding="{Binding name}" />
-                <DataGridTextColumn Header="Fecha" Binding="{Binding date}" />
-                <DataGridTextColumn Header="Estado de pago" Binding="{Binding EstadoDePagoTraducido}" />
+                <DataGridTextColumn Header="Nombre factura" Binding="{Binding name}" />
+                <DataGridTextColumn Header="Nombre del cliente" Binding="{Binding nombre_cliente}" />
+                <DataGridTextColumn Header="Importe total" Binding="{Binding amount_total}" />
+                <DataGridTextColumn Header="Fecha" Binding="{Binding date, StringFormat=dd/MM/yyyy}" />
+                <DataGridTextColumn Header="Estado de pago" Binding="{Binding EstadoFacturaTraducido}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Cerrar" Grid.Row="2" HorizontalAlignment="Right" Margin="20" VerticalAlignment="Bottom" Width="80" Click="Boton_cerrar"/>
+        <Button Content="Cerrar" Grid.Row="2" HorizontalAlignment="Right" Margin="20" VerticalAlignment="Bottom" Width="80" Click="Boton_cerrar">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
 
     </Grid>
 </Window>
